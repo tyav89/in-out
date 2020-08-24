@@ -27,15 +27,15 @@ public class Save {
         zipFiles(pathArhiv, listObject);
         openZip(pathArhiv, "C:\\Users\\tdv\\Desktop\\Games\\savegames\\");
 
-        GameProgress gp = openProgress(listObject , 1);
+        GameProgress gp = openProgress(listObject, 1);
         System.out.println(gp);
 
     }
 
     public static void saveGame(File file, GameProgress gp) {
         try (FileOutputStream fos = new FileOutputStream(file);
-             ObjectOutputStream oos = new ObjectOutputStream(fos)){
-           oos.writeObject(gp);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(gp);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -44,7 +44,7 @@ public class Save {
     }
 
     public static void zipFiles(String path, List<File> listObject) {
-        try(ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(path))) {
+        try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(path))) {
             for (int i = 0; i < listObject.size(); i++) {
                 FileInputStream fis = new FileInputStream(listObject.get(i).getPath());
                 ZipEntry ze = new ZipEntry(listObject.get(i).getName());
@@ -68,7 +68,7 @@ public class Save {
     }
 
     public static void openZip(String pathFile, String pathFolder) {
-        try(ZipInputStream zin = new ZipInputStream(new FileInputStream(pathFile))) {
+        try (ZipInputStream zin = new ZipInputStream(new FileInputStream(pathFile))) {
             ZipEntry entry;
             String name;
             while ((entry = zin.getNextEntry()) != null) {
@@ -90,9 +90,9 @@ public class Save {
 
     public static GameProgress openProgress(List<File> list, int number) {
         GameProgress gp = null;
-        try(FileInputStream fis = new FileInputStream(list.get(number).getPath());
-            ObjectInputStream ois = new ObjectInputStream(fis)) {
-             gp = (GameProgress) ois.readObject();
+        try (FileInputStream fis = new FileInputStream(list.get(number).getPath());
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+            gp = (GameProgress) ois.readObject();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
